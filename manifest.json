@@ -1,0 +1,19 @@
+{
+    "name" : "HN New Comments",
+    "version" : "0.316",
+    "icons": {
+        "128": "images/128.jpg",
+        "48" : "images/48.jpg"
+        },
+    "background_page" : "html/background.html",
+    "options_page": "html/options.html",
+    "description" : "Highlight new and edited comments.",
+    "content_scripts": [
+        {   "matches" : ["http://news.ycombinator.com/", "http://news.ycombinator.com/news", "http://news.ycombinator.com/newest", "http://news.ycombinator.com/ask", "http://news.ycombinator.com/best", "http://news.ycombinator.com/classic"],
+            "js" : ["lib/jquery.js", "js/storage.js", "js/main.js"]
+        },
+        {   "matches" : ["http://news.ycombinator.com/item*", "http://news.ycombinator.com/threads*"],
+            "js" : ["lib/jquery.js", "lib/jquery.md5.js", "js/storage.js", "js/item.js"]
+        }
+    ]
+}

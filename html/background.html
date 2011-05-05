@@ -1,0 +1,30 @@
+<html>
+    <script src="../lib/jquery.js"></script>
+    <script src="../lib/jquery.json.js"></script>
+    <script src="../lib/jstorage.js"></script>
+    <script>
+        chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+            if (request.method == "getOptions") {
+              var dict = {new_color : localStorage.nc_bgc, edited_color:localStorage.ec_bgc, username:localStorage.username, highlight:localStorage.highlight};
+              sendResponse(dict);
+            }
+            else if (request.method == "set") {
+            	if (typeof request.key === "string" && (typeof request.value === "string" || typeof request.value === "number" && !isNaN(request.value))) {
+                	$.jStorage.set(request.key,request.value);
+                	sendResponse({response:"ok"});
+                } else {
+                	sendResponse({response:"invalid input", request:request});
+                }
+            }
+            else if (request.method == "get") {
+                var val = $.jStorage.get(request.key,request.defaultValue);
+                sendResponse({value: val});
+            }
+            else if (request.method == "dump") {
+                sendResponse(localStorage);
+            }
+            else 
+                sendResponse({response:"not a valid method"});
+        });
+    </script>
+</html>

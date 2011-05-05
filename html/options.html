@@ -1,0 +1,52 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <label>New comment background color:</label><input id="nc_bgc" type="text"/><span> (change these to #f6f6ef to turn off highlighting)</span>
+        <br />
+        <label>Edited comment background color:</label><input id="ec_bgc" type="text"/>
+        <br />
+        <label>Username:</label><input id="username" type="text"/>
+        <br />
+        <label>Highlight: </label><br />
+        <form name="highlightf">
+        	<input type="radio" name="highlighti" value="comment_header" checked="checked"/>comment header
+        	<input type="radio" name="highlighti" value="whole_comment"  />whole comment
+        </form>
+        
+        <script type="text/javascript">
+            var nc = document.getElementById("nc_bgc");
+            var ec = document.getElementById("ec_bgc");  
+            var username = document.getElementById("username");
+            
+            var radioBs = document.highlightf.highlighti;
+                for (var i = 0; i < radioBs.length; i++) {
+					if (radioBs[i].value == localStorage['highlight'])
+						radioBs[i].setAttribute('checked', 'checked');
+			}
+            
+            nc.value = localStorage['nc_bgc'] || '#bde4ff';
+            ec.value = localStorage['ec_bgc'] || '#e0e0e0';
+            username.value = localStorage['username'] || "";
+            
+            var save = function() {
+                localStorage['nc_bgc'] = nc.value;
+                localStorage['ec_bgc'] = ec.value;
+                localStorage['username'] = username.value;
+                var radioBs = document.highlightf.highlighti;
+                for (var i = 0; i < radioBs.length; i++) {
+					if (radioBs[i].checked)
+						localStorage['highlight'] = radioBs[i].value;
+				}
+            };
+            
+            var deleteJStorage = function() {
+            	if (confirm("This will delete all information about comments seen. The above settings will remain.")) {
+            		delete localStorage.jStorage;
+            	}
+            };
+        </script>
+        <input type="button" onclick="save()" value="Save"/>
+        <input type="button" onclick="deleteJStorage();" value="Clear storage"
+    </body>
+</html>
